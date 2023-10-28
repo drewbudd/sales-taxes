@@ -16,6 +16,8 @@ export default function (entry: string): ReceiptEntry {
   quantity = parseInt(entryParts.splice(0, 1)[0])
   // remove 'at {cost}' and save cost
   baseCost = parseFloat(entryParts.splice(entryParts.length - 2, 2)[1])
+  // join remaining parts with ' ' and save to description
+  description = entryParts.join(' ')
 
   return {
     description,
