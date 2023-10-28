@@ -14,6 +14,8 @@ export default function (entry: string): ReceiptEntry {
   const entryParts = entry.split(' ')
   // remove and save quantity
   quantity = parseInt(entryParts.splice(0, 1)[0])
+  // remove 'at {cost}' and save cost
+  baseCost = parseFloat(entryParts.splice(entryParts.length - 2, 2)[1])
 
   return {
     description,
