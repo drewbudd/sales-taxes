@@ -69,5 +69,12 @@ describe('useReceiptCalculator', () => {
 
       expect(receiptTotalTax.value).toEqual(input.value.length * testCalculatedTax)
     })
+
+    test('sets receiptTotal as expected', () => {
+      const input: Ref<string[]> = ref(['first item', 'second item'])
+      const { receiptTotal } = useReceiptCalculator(input)
+
+      expect(receiptTotal.value).toEqual(input.value.length * (testReceiptEntry().baseCost + testCalculatedTax))
+    })
   })
 })
