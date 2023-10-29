@@ -1,21 +1,26 @@
+import type { ReceiptEntry } from "~/types/receipt-entry"
 import { useReceiptCalculator } from "../receiptCalculator"
 import { ref, type Ref } from "vue"
+import type { ApplicableTaxes } from "~/types/applicable-taxes"
 
 vi.mock('~/utils/parseReceiptEntry')
 vi.mock('~/utils/determineApplicableTaxes')
 vi.mock('~/utils/calculateTax')
 
 describe('useReceiptCalculator', () => {
-  const parseReceiptEntryMock = vi.fn().mockReturnValue({
+  const testReceiptEntry = (): ReceiptEntry => ({
     baseCost: 1.00,
     quantity: 1,
     description: 'test parse'
   })
-  const determineApplicableTaxesMock = vi.fn().mockReturnValue({
+  const testApplicableTaxes = (): ApplicableTaxes => ({
     basicSalesTax: true,
     importSalesTax: false
   })
-  const calculateTaxMock = vi.fn().mockReturnValue(0.10)
+  const testCalculatedTax = 0.10
+  const parseReceiptEntryMock = vi.fn().mockReturnValue(testReceiptEntry())
+  const determineApplicableTaxesMock = vi.fn().mockReturnValue(testApplicableTaxes())
+  const calculateTaxMock = vi.fn().mockReturnValue(testCalculatedTax)
 
   beforeEach(async () => {
     const parseReceiptEntryModule = await import('~/utils/parseReceiptEntry')
@@ -56,6 +61,13 @@ describe('useReceiptCalculator', () => {
       const { evaluatedItems } = useReceiptCalculator(input)
 
       expect(evaluatedItems.value.map(item => item.originalInput)).toEqual(input.value)
+    })
+
+    test('sets receiptTotalTax as expected', () => {
+      const input: Ref<string[]> = ref(['first item', 'second item'])
+      const { receiptTotalTax } = useReceiptCalculator(input)
+
+      expect(receiptTotalTax.value).toEqual(input.value.length * testCalculatedTax)
     })
   })
 })
