@@ -1,5 +1,5 @@
 import type { ApplicableTaxes } from "~/types/applicable-taxes";
-import BaseSalesTaxExemptions from "../data/base-sales-tax-exemptions";
+import BaseSalesTaxExemptions from "~/data/base-sales-tax-exemptions";
 
 const IMPORT_IDENTIFIER = 'imported'
 
