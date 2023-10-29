@@ -35,4 +35,14 @@ describe('parseReceiptEntry', () => {
   ])('parseReceiptEntry given $input parses description=$expectedDescription', ({ input, expectedDescription }) => {
     expect(parseReceiptEntry(input).description).toEqual(expectedDescription)
   })
+
+  test.each([
+    { input: '1 book at 12.49', expected: { quantity: 1, baseCost: 12.49, description: 'book' } },
+    { input: '1 music CD at 14.99', expected: { quantity: 1, baseCost: 14.99, description: 'music CD' } },
+    { input: '1 imported box of chocolates at 10.00', expected: { quantity: 1, baseCost: 10.00, description: 'imported box of chocolates' } },
+    { input: '0 chocolate bars at 0.85', expected: { quantity: 0, baseCost: 0.85, description: 'chocolate bars' } },
+    { input: '-1 item name b*//a', expected: { quantity: -1, baseCost: NaN, description: 'item' } },
+  ])('parseReceiptEntry parses $input as expected', ({ input, expected }) => {
+    expect(parseReceiptEntry(input)).toEqual(expected)
+  })
 })
