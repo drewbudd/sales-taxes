@@ -6,6 +6,7 @@ import parseReceiptEntry from "~/utils/parseReceiptEntry";
 
 export function useReceiptCalculator(input: Ref<string[]>) {
   const evaluatedItems: Ref<ReceiptItem[]> = ref([])
+  const receiptTotalTax: Ref<number> = ref(0)
 
   const evaluateReceipt = (items: Ref<string[]>) => {
     evaluatedItems.value = items.value
@@ -21,11 +22,14 @@ export function useReceiptCalculator(input: Ref<string[]>) {
           taxPerItem
         }
       })
+    receiptTotalTax.value = evaluatedItems.value.map(
+      item => item.parsedEntry.quantity * item.taxPerItem
+    ).reduce((acc, currentValue) => acc + currentValue)
   }
 
   watchEffect(() => {
     evaluateReceipt(input)
   })
 
-  return { evaluatedItems }
+  return { evaluatedItems, receiptTotalTax }
 }
