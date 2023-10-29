@@ -1,5 +1,5 @@
 import { useReceiptCalculator } from "../receiptCalculator"
-import { ref, type Ref } from "vue"
+import { ref } from "vue"
 
 describe('useReceiptCalculator', () => {
   test.each([

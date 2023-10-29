@@ -23,12 +23,14 @@ export function useReceiptCalculator(input: Ref<string[]>) {
           taxPerItem
         }
       })
-    receiptTotalTax.value = evaluatedItems.value.map(
-      item => item.parsedEntry.quantity * item.taxPerItem
-    ).reduce((acc, currentValue) => acc + currentValue)
-    receiptTotal.value = evaluatedItems.value.map(
-      item => item.parsedEntry.quantity * item.parsedEntry.baseCost
-    ).reduce((acc, currentValue) => acc + currentValue) + receiptTotalTax.value
+    if (evaluatedItems.value.length > 0) {
+      receiptTotalTax.value = parseFloat(evaluatedItems.value.map(
+        item => item.parsedEntry.quantity * item.taxPerItem
+      ).reduce((acc, currentValue) => acc + currentValue).toFixed(2))
+      receiptTotal.value = parseFloat((evaluatedItems.value.map(
+        item => item.parsedEntry.quantity * item.parsedEntry.baseCost
+      ).reduce((acc, currentValue) => acc + currentValue) + receiptTotalTax.value).toFixed(2))
+    }
   }
 
   watchEffect(() => {
