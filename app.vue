@@ -1,5 +1,5 @@
 <template>
-  <div>
-    <NuxtWelcome />
-  </div>
+  <UContainer>
+    <SalesTaxCalculator />
+  </UContainer>
 </template>
