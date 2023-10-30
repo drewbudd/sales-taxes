@@ -1,6 +1,15 @@
-# Nuxt 3 Minimal Starter
+# Sales Tax Calculator
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Tech Stack:
+
+* [Nuxt 3](https://nuxt.com/docs/getting-started/introduction)
+* NuxtUI
+* Vue 3 (part of Nuxt 3)
+* TypeScript
+* Vitest
+* Eslint
+* Docker
+* Node.js 18 (as required by Nuxt 3)
 
 ## Setup
 
@@ -10,14 +19,8 @@ Make sure to install the dependencies:
 # npm
 npm install
 
-# pnpm
-pnpm install
-
 # yarn
 yarn install
-
-# bun
-bun install
 ```
 
 ## Development Server
@@ -28,14 +31,8 @@ Start the development server on `http://localhost:3000`:
 # npm
 npm run dev
 
-# pnpm
-pnpm run dev
-
 # yarn
 yarn dev
-
-# bun
-bun run dev
 ```
 
 ## Production
@@ -46,14 +43,8 @@ Build the application for production:
 # npm
 npm run build
 
-# pnpm
-pnpm run build
-
 # yarn
 yarn build
-
-# bun
-bun run build
 ```
 
 Locally preview production build:
@@ -62,14 +53,20 @@ Locally preview production build:
 # npm
 npm run preview
 
-# pnpm
-pnpm run preview
-
 # yarn
 yarn preview
-
-# bun
-bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## Docker
+
+There is a Dockerfile provided to build a production version of the app. You should build the image, then run it.
+There are many ways this could be done, but a short example would be:
+
+```bash
+docker build . -t sales-tax:newest
+docker run -p 3000:3000 sales-tax:newest
+```
+
+With these commands, you should have the app running locally at ```http://localhost:3000```
