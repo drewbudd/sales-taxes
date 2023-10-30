@@ -1,4 +1,4 @@
-import { type Ref, ref, watchEffect } from "vue";
+import { type Ref, ref, watchEffect, toValue } from "vue";
 import type { ReceiptItem } from "~/types/receipt-item";
 import calculateTax from "~/utils/calculateTax";
 import determineApplicableTaxes from "~/utils/determineApplicableTaxes";
@@ -9,8 +9,8 @@ export function useReceiptCalculator(input: Ref<string[]>) {
   const receiptTotalTax: Ref<number> = ref(0)
   const receiptTotal: Ref<number> = ref(0)
 
-  const evaluateReceipt = (items: Ref<string[]>) => {
-    evaluatedItems.value = items.value
+  const evaluateReceipt = () => {
+    evaluatedItems.value = toValue(input)
       .map((item): ReceiptItem => {
         const parsedEntry = parseReceiptEntry(item)
         const applicableTaxes = determineApplicableTaxes(parsedEntry.description)
@@ -34,7 +34,7 @@ export function useReceiptCalculator(input: Ref<string[]>) {
   }
 
   watchEffect(() => {
-    evaluateReceipt(input)
+    evaluateReceipt()
   })
 
   return { evaluatedItems, receiptTotalTax, receiptTotal }
